@@ -1,0 +1,138 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+    <h:head>
+        <title>TODO supply a title</title>
+    </h:head>
+    <h:body>
+
+        <ui:include src="menu.xhtml"/>
+        
+        <p:separator/>
+        
+        <p:growl id="gro" life="4000"/>
+        <h:form id="formCadastrarLivro">
+            <p:commandButton value="cadastrar" oncomplete="PF('widDialCadastroLivro').show()"/>
+        
+            <p:separator/>
+            
+            <p:dataTable id="tableLivro" value="#{livroController.recuperarTodos()}"
+                         var="item" rowKey="#{item.codLivro}" paginator="true" rows="5" selectionMode="single">
+                <p:column headerText="Código">
+                    #{item.codLivro}
+                </p:column>
+            
+                <p:column headerText="Autor" filterBy="#{item.autor}">
+                    #{item.autor}
+                </p:column>
+                
+                <p:column headerText="Título" filterBy="#{item.titulo}">
+                    #{item.titulo}
+                </p:column>
+                
+                <p:column headerText="Emprestado" filterBy="#{item.emprestado}">
+                    #{item.emprestado}
+                </p:column>
+                
+                <p:column headerText="operações" width="20%">
+                    <p:column headerText="operações" width="20%">
+                        <p:commandButton icon="ui-icon-search" oncomplete="PF('widDialVisualizaLivro').show()" 
+                                         update=":formCadastrarLivro:dialVisualizaLivro">
+                            <f:setPropertyActionListener value="#{item}" target="#{livroController.selecionarLivro}"/>
+                        </p:commandButton>
+                
+                        <p:commandButton icon="ui-icon-pencil" oncomplete="PF('widDialAlterarLivro').show()"
+                                         update=":dialAlterarLivro">
+                            <f:setPropertyActionListener value="#{item}" target="#{livroController.selecionarLivro}"/>
+                        </p:commandButton>
+                        
+                        <p:commandButton icon="ui-icon-trash" action="#{livroController.excluirLivroAction()}" update=":formCadastrarLivro :gro">
+                            <f:setPropertyActionListener value="#{item}" target="#{livroController.selecionarLivro}"/>
+                            <p:confirm header="Atenção" message="Deseja realmente deletar?" />
+                        </p:commandButton>
+                    </p:column>
+                </p:column>
+            </p:dataTable>
+
+            <p:dialog id="dialVisualizaLivro" visible="false" modal="true" header="Livro cadastrado"
+                      resizable="false" widgetVar="widDialVisualizaLivro">
+
+                <p:panelGrid columns="2">
+                    <h:outputText value="Código:"/>
+                    <h:outputText value="#{livroController.selecionarLivro.codLivro}"/>
+
+                    <h:outputText value="Autor:"/>
+                    <h:outputText value="#{livroController.selecionarLivro.autor}"/>
+
+                    <h:outputText value="Título:"/>
+                    <h:outputText value="#{livroController.selecionarLivro.titulo}"/>
+
+                    <h:outputText value="Emprestado:"/>
+                    <h:outputText value="#{livroController.selecionarLivro.emprestado}"/>
+
+                </p:panelGrid>
+            </p:dialog>
+
+        </h:form>
+
+        <p:dialog id="dialCadastroLivro" visible="false" modal="true" resizable="false"
+                  widgetVar="widDialCadastroLivro">
+            <h:form id="formDialCadastroLivro">
+                <p:panelGrid columns="3">
+                    <h:outputText value="Autor:"/>
+                    <p:inputText id="txtAutor" onclick="" disabled="false" value="#{livroController.cadastroLivro.autor}" required="true"
+                                 requiredMessage="Campo obrigátorio" widgetVar="widTxtAutor"/>
+                    <p:message for="txtAutor"/>
+
+                    <h:outputText value="Título:"/>
+                    <p:inputText id="txtTitulo" onclick="" disabled="false" value="#{livroController.cadastroLivro.titulo}" required="true"
+                                 requiredMessage="Campo obrigátorio"/>
+                    <p:message for="txtTitulo"/>
+
+                </p:panelGrid>
+                
+                <p:commandButton value="cadastrar" action="#{livroController.adicionarLivroAction()}"
+                                 update="formDialCadastroLivro gro">
+                    
+                </p:commandButton>
+                
+            </h:form>
+        </p:dialog>
+
+        <p:dialog id="dialAlterarLivro" visible="false" modal="true" resizable="false"
+                  widgetVar="widDialAlterarLivro">
+            <h:form id="formDialAlteraLivro">
+                <p:panelGrid columns="2">
+                    <h:outputText value="Código:"/>
+                    <p:inputText id="txtCodLivro2" value="#{livroController.selecionarLivro.codLivro}" disabled="true" required="true"/>
+
+                    <h:outputText  value="Autor:"/>
+                    <p:inputText id="txtAutor2" value="#{livroController.selecionarLivro.autor}" required="true"/>
+
+                    <h:outputText value="Título:"/>
+                    <p:inputText id="txtTitulo2" value="#{livroController.selecionarLivro.titulo}" required="true"/>
+
+                </p:panelGrid>
+
+                <p:commandButton value="alterar" action="#{livroController.alterarLivroAction()}"
+                                 update=":formCadastrarLivro :gro" oncomplete="PF('widDialAlterarLivro').hide()">
+                    <p:confirm header="Atenção" message="Deseja realmente alterar?" />
+                </p:commandButton>
+
+            </h:form>
+        </p:dialog>
+
+        <p:confirmDialog  id="dialConfirm" global="true" widgetVar="widDialConfirma" >
+            <h:form>
+                <p:commandButton value="sim" styleClass="ui-confirmdialog-yes" type="button" icon="ui-icon-check"/>
+                <p:commandButton value="não" styleClass="ui-confirmdialog-no" type="button" icon="ui-icon-close"/>
+            </h:form>    
+        </p:confirmDialog>
+
+    </h:body>
+</html>
+
