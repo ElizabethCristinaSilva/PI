@@ -27,6 +27,7 @@ public class EmprestimoController {
         this.cadastroEmprestimo = new Emprestimo();
         this.selecionarLivro = new Livro();
         this.selecionarPessoa = new Pessoa();
+        this.livroModel = new LivroModel();
     }
 
     public void adicionarEmprestimoAction() {
