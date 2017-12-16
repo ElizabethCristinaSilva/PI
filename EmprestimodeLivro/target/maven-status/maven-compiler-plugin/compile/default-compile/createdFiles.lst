@@ -8,8 +8,10 @@ com\emprestimodelivro\dao\DAOGenerico.class
 com\emprestimodelivro\model\entidademodel\PessoaModel.class
 Test.class
 com\emprestimodelivro\model\entidade\Livro.class
+com\emprestimodelivro\converte\PessoaConverter.class
 com\emprestimodelivro\dao\EmprestimoDAO.class
 com\emprestimodelivro\model\entidademodel\EmprestimoModel.class
+com\emprestimodelivro\converte\LivroConverter.class
 com\emprestimodelivro\model\entidade\Emprestimo.class
 com\emprestimodelivro\dao\LivroDAO.class
 com\emprestimodelivro\model\entidadehibernetedao\EmprestimoHibernateDAO.class

@@ -31,28 +31,33 @@ public class EmprestimoController {
     }
 
     public void adicionarEmprestimoAction() {
-        
-        this.cadastroEmprestimo.setLivro(selecionarLivro);
-        this.cadastroEmprestimo.setPessoa(selecionarPessoa);
-        this.cadastroEmprestimo.setDataEmprestimo("11/12/2017");
-        this.emprestimoModel.inserirEmprestimo(this.cadastroEmprestimo);
+        if(!selecionarLivro.isEmprestado()){
+            this.cadastroEmprestimo.setLivro(selecionarLivro);
+            this.cadastroEmprestimo.setPessoa(selecionarPessoa);
+            this.cadastroEmprestimo.setDataEmprestimo("18/12/2017");
+            this.emprestimoModel.inserirEmprestimo(this.cadastroEmprestimo);
 
-        selecionarLivro.setEmprestado(true);
-        this.livroModel.atualizarLivro(selecionarLivro);
-        
-        this.cadastroEmprestimo = new Emprestimo();
-        FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("Emprestimo cadastrado com sucesso!"));
+            selecionarLivro.setEmprestado(true);
+            this.livroModel.atualizarLivro(selecionarLivro);
+
+            this.cadastroEmprestimo = new Emprestimo();
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("Emprestimo cadastrado com sucesso!"));
+        }else{
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("Livro já emprestado"));
+        }
     }
     
     public void Devolucao () {
         
-        this.getCadastroEmprestimo().setDataDevolucao(new Date().toString());
+        this.getCadastroEmprestimo().setLivro(selecionarLivro);
+        this.getCadastroEmprestimo().setPessoa(selecionarPessoa);
+        this.getCadastroEmprestimo().setDataDevolucao("18/12/2017");
         
-        this.emprestimoModel.atualizarEmprestimo(this.getCadastroEmprestimo());
+        selecionarLivro.setEmprestado(false);
+        this.livroModel.atualizarLivro(selecionarLivro);
         
-        this.cadastroEmprestimo.getLivro().setEmprestado(false);
-        livroModel.atualizarLivro(this.cadastroEmprestimo.getLivro());
-        
+        this.cadastroEmprestimo = new Emprestimo();
+        FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("Emprestimo devolvido com sucesso!"));        
     }
 
     public Emprestimo getSelecionarEmprestimo() {

@@ -32,20 +32,9 @@
                 
             </h:panelGrid>
             
-            <p:commandButton value="emprestar" action="#{emprestimoController.adicionarEmprestimoAction()}">
-                <p:confirm header="Atenção" message="Deseja realmente fazer o emprestimo?"/>
-            </p:commandButton>
+            <p:commandButton value="emprestar" action="#{emprestimoController.adicionarEmprestimoAction()}"></p:commandButton>
             
-            <p:commandButton value="devolver" action="#{emprestimoController.devolucao()}">
-                <p:confirm header="Atenção" message="Deseja relmente fazer a devolução?"/>
-            </p:commandButton>
-            
-            <p:confirmDialog  id="dialConfirm" global="true" widgetVar="widDialConfirma" >
-                <h:form>
-                    <p:commandButton value="sim" styleClass="ui-confirmdialog-yes" type="button" icon="ui-icon-check"/>
-                    <p:commandButton value="não" styleClass="ui-confirmdialog-no" type="button" icon="ui-icon-close"/>
-                </h:form>    
-            </p:confirmDialog>
+            <p:confirmDialog  id="dialConfirm" global="true" widgetVar="widDialConfirma" ></p:confirmDialog>
             
         </h:form>
         

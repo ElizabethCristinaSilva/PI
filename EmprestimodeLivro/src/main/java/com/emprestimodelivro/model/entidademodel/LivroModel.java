@@ -8,14 +8,6 @@ import com.emprestimodelivro.model.entidadehibernetedao.LivroHibernateDAO;
 public class LivroModel {
     
     private LivroDAO livroDAO;
-    private static LivroDAO instance = null;
-    
-    public static LivroModel getLivroModel(){
-        if(instance != null){
-            instance = new LivroHibernateDAO;
-        }
-        return (LivroModel) instance;
-    }
     
     public LivroModel() {
         this.livroDAO = new LivroHibernateDAO();
