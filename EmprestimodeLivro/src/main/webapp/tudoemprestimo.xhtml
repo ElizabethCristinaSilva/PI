@@ -36,9 +36,7 @@
                 <p:confirm header="Atenção" message="Deseja realmente fazer o emprestimo?"/>
             </p:commandButton>
             
-            <p:commandButton value="devolver" action="#{emprestimoController.devolucao()}">
-                <p:confirm header="Atenção" message="Deseja relmente fazer a devolução?"/>
-            </p:commandButton>
+            <p:commandButton value="devolver" action="#{emprestimoController.devolucao()}"></p:commandButton>
             
             <p:confirmDialog  id="dialConfirm" global="true" widgetVar="widDialConfirma" ></p:confirmDialog>
             
